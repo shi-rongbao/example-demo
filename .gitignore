@@ -1,1 +1,30 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Java class files
+*.class
+
+# Log files
+*.log
+
+# JAR/WAR/EAR files
+*.jar
+*.war
+*.ear
+
 target
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Temp files
+*.tmp
+
+# Local config files
+application.properties.local
+application.yml.local
+
+# Maven
+.m2/repository/
