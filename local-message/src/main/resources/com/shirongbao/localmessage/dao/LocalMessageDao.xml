@@ -1,0 +1,94 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shirongbao.localmessage.dao.LocalMessageDao">
+
+    <sql id="BASE_COLUMN">
+        id, create_time, update_time, deleted, req_snapshot, status, next_retry_time, retry_times, max_retry_times, fail_reason
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO local_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="localMessageDo.reqSnapshot != null">
+                req_snapshot,
+            </if>
+            <if test="localMessageDo.status != null">
+                status,
+            </if>
+            <if test="localMessageDo.nextRetryTime != null">
+                next_retry_time,
+            </if>
+            <if test="localMessageDo.maxRetryTimes != null">
+                max_retry_times,
+            </if>
+            <if test="localMessageDo.retryTimes != null">
+                retry_times,
+            </if>
+            <if test="localMessageDo.failReason != null">
+                fail_reason,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="localMessageDo.reqSnapshot != null">
+                #{localMessageDo.reqSnapshot},
+            </if>
+            <if test="localMessageDo.status != null">
+                #{localMessageDo.status},
+            </if>
+            <if test="localMessageDo.nextRetryTime != null">
+                #{localMessageDo.nextRetryTime},
+            </if>
+            <if test="localMessageDo.maxRetryTimes != null">
+                #{localMessageDo.maxRetryTimes},
+            </if>
+            <if test="localMessageDo.retryTimes != null">
+                #{localMessageDo.retryTimes},
+            </if>
+            <if test="localMessageDo.failReason != null">
+                #{localMessageDo.failReason},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateById">
+        UPDATE local_message
+        <set>
+            <if test="updateDo.reqSnapshot != null">
+                req_snapshot = #{updateDo.reqSnapshot},
+            </if>
+            <if test="updateDo.failReason != null">
+                fail_reason = #{updateDo.failReason},
+            </if>
+            <if test="updateDo.context != null">
+                context = #{updateDo.context},
+            </if>
+            <if test="updateDo.status != null">
+                status = #{updateDo.status},
+            </if>
+            <if test="updateDo.retryTimes != null">
+                retry_times = #{updateDo.retryTimes},
+            </if>
+            <if test="updateDo.maxRetryTimes != null">
+                max_retry_times = #{updateDo.maxRetryTimes},
+            </if>
+            <if test="updateDo.nextRetryTime != null">
+                next_retry_time = #{updateDo.nextRetryTime},
+            </if>
+        </set>
+        WHERE id = #{updateDo.id}
+        AND deleted = 0
+    </update>
+
+    <select id="loadWaitRetryRecords" resultType="com.shirongbao.localmessage.entity.LocalMessageDo">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        FROM local_message
+        WHERE status IN
+        <foreach collection="status" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND next_retry_time &lt;= #{nextRetryTime}
+        AND retry_times &lt; max_retry_times
+        AND deleted = 0
+    </select>
+</mapper>

@@ -12,18 +12,23 @@
 
     <modules>
         <module>strategy</module>
+        <module>local-message</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <springboot.version>2.4.2</springboot.version>
+
         <!--dependencies-->
         <lombok.version>1.18.34</lombok.version>
         <mockito.version>5.11.0</mockito.version>
         <junit.version>5.11.2</junit.version>
-        <springboot-test-starter.version>2.4.2</springboot-test-starter.version>
+        <hutool.version>5.8.36</hutool.version>
 
         <!--dependencyManagement-->
-        <springboot-web-starter.version>2.4.2</springboot-web-starter.version>
+        <fastjson.version>2.0.25</fastjson.version>
+        <mybatis-starter.version>2.3.2</mybatis-starter.version>
+        <mysql-driver.version>8.0.32</mysql-driver.version>
     </properties>
 
     <dependencies>
@@ -32,6 +37,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+
+        <!--hutool-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
 
         <!--mockito依赖-->
@@ -50,10 +62,18 @@
             <scope>test</scope>
         </dependency>
 
+        <!--springboot-test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${springboot-test-starter.version}</version>
+            <version>${springboot.version}</version>
+        </dependency>
+
+        <!--jdbc starter-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${springboot.version}</version>
         </dependency>
     </dependencies>
 
@@ -63,7 +83,35 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>${springboot-web-starter.version}</version>
+                <version>${springboot.version}</version>
+            </dependency>
+
+            <!--springboot-aop-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+                <version>${springboot.version}</version>
+            </dependency>
+
+            <!--fastjson-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!--mybatis-starter-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-starter.version}</version>
+            </dependency>
+
+            <!--mysql驱动-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-driver.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
